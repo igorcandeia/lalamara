@@ -7,12 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-    <title>Node/Angular Todo App</title>
+    <title>Lalamara</title>
 
-    <!-- SCROLLS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <!-- load bootstrap -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <style>
         html {
             overflow-y: scroll;
@@ -22,17 +20,19 @@
             padding-top: 50px;
         }
 
-        #todo-list {
-            margin-bottom: 30px;
-        }
-
-        #todo-form {
-            margin-bottom: 50px;
-        }
     </style>
 
     <!-- SPELLS -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+            integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"
+            integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"
+            integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"
+            crossorigin="anonymous"></script>
 
     <script src="js/controllers/main.js"></script> <!-- load up our controller -->
     <script src="js/services/produtos.js"></script>
@@ -43,53 +43,56 @@
 <body ng-controller="mainController">
 <div class="container">
 
-    <!-- HEADER AND TODO COUNT -->
-    <div class="jumbotron text-center">
-        <h2>Quantidade de produtos cadastrados <span class="label label-info">{{ produtos.length }}</span></h2>
-    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Codigo</th>
+            <th>Descrição</th>
+            <th>Valor de compra</th>
+            <th>Valor de venda</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="produto in produtos" ng-click="deleteProduto(produto._id)">
+            <th scope="row">{{produto.codigo}}</th>
+            <td>{{produto.descricao}}</td>
+            <td>{{produto.preco_custo}}</td>
+            <td>{{produto.preco_venda}}</td>
+        </tr>
+        </tbody>
+    </table>
 
-    <div id="produto-list" class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-
-
-            <!-- LOOP OVER THE TODOS IN $scope.todos -->
-            <div class="checkbox" ng-repeat="produto in produtos">
-                <label>
-                    <input type="checkbox" ng-click="deleteProduto(produto._id)"> {{ produto.descricao }}
-                </label>
-            </div>
-
-            <p class="text-center" ng-show="loading">
-                <span class="fa fa-spinner fa-spin fa-3x"></span>
-            </p>
-
-        </div>
-    </div>
+</div>
+<br/>
+<div class="container">
 
     <div id="produto-form" class="row">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
-            <form>
-                <div class="form-group">
 
-                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                    <input type="number" class="form-control input-lg text-center"
-                           placeholder="Codigo" ng-model="produtoForm.codigo">
-                    <input type="text" class="form-control input-lg text-center"
-                           placeholder="Descrição" ng-model="produtoForm.descricao">
-                    <input type="number" class="form-control input-lg text-center"
-                           placeholder="Valor de compra" ng-model="produtoForm.preco_custo">
-                    <input type="number" class="form-control input-lg text-center"
-                           placeholder="VAlor de venda" ng-model="produtoForm.preco_venda">
+        <form class="form-inline">
 
-                </div>
+            <div class="form-group">
+                <input type="number" class="form-control"
+                       placeholder="Codigo" ng-model="produtoForm.codigo">
+            </div>
 
-                <button type="submit" class="btn btn-primary btn-lg" ng-click="createProduto()">Add Produto</button>
-            </form>
-        </div>
+            <div class="form-group">
+                <input type="text" class="form-control"
+                       placeholder="Descrição" ng-model="produtoForm.descricao">
+            </div>
+
+            <div class="form-group">
+                <input type="number" class="form-control"
+                       placeholder="Valor de compra" ng-model="produtoForm.preco_custo">
+            </div>
+
+            <div class="form-group">
+                <input type="number" class="form-control"
+                       placeholder="Valor de venda" ng-model="produtoForm.preco_venda">
+            </div>
+
+            <button type="submit" class="btn btn-primary" ng-click="createProduto()">Add Produto</button>
+        </form>
     </div>
-
-    <br/>
-
 </div>
 
 </body>
