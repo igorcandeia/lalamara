@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
           integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
         html {
             overflow-y: scroll;
@@ -42,7 +43,18 @@
 <!-- SET THE CONTROLLER -->
 <body ng-controller="mainController">
 <div class="container">
+    <p class="text-center" ng-show="loading">
+        <span class="fa fa-spinner fa-spin fa-3x"></span>
+    </p>
 
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <input type="text" class="form-control" placeholder="Procurar por descrição" ng-model="searchProduto">
+            </div>
+        </div>
+    </form>
     <table class="table table-bordered table-hover">
         <thead class="thead-inverse">
         <tr>
@@ -50,14 +62,16 @@
             <th>Descrição</th>
             <th>Valor de compra</th>
             <th>Valor de venda</th>
+            <th>Quantidade</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="produto in produtos" ng-click="deleteProduto(produto._id)">
+        <tr ng-repeat="produto in produtos | filter:searchProduto" ng-click="deleteProduto(produto._id)">
             <th scope="row">{{produto.codigo}}</th>
             <td>{{produto.descricao}}</td>
             <td>{{produto.preco_custo}}</td>
             <td>{{produto.preco_venda}}</td>
+            <td>{{produto.qtde}}</td>
         </tr>
         </tbody>
     </table>
@@ -88,6 +102,10 @@
             <div class="form-group">
                 <input type="number" class="form-control"
                        placeholder="Valor de venda" ng-model="produtoForm.preco_venda">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control"
+                       placeholder="Quantidade" ng-model="produtoForm.qtde">
             </div>
 
             <button type="submit" class="btn btn-primary" ng-click="createProduto()">Add Produto</button>

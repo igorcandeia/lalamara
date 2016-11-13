@@ -25,6 +25,7 @@ module.exports = function (app) {
             descricao: req.body.descricao,
             preco_custo: req.body.preco_custo,
             preco_venda: req.body.preco_venda,
+            qtde: req.body.qtde,
             done: false
         }, function (err, todo) {
             if (err)
